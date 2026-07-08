@@ -1,8 +1,9 @@
 namespace game_prototype.Entity
 {
-    public interface IClasses
+    public interface IClass
     {
         string Name { get; }
+        int Level { get; }
         string Bonus { get; }
         string Competences { get; }
         string BaseEquipment { get; }

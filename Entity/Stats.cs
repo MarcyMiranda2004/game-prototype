@@ -223,14 +223,14 @@ namespace game_prototype.Entity
         }
     }
 
-    public class Stats
+    public class Stats : StatAbs
     {
-        public Stat Health { get; } // punti vita
-        public Stat Magic { get; } // punti magia
+        public Stat Health { get; }
+        public Stat Magic { get; }
 
-        public Stat Strength { get; } // forza fisica
-        public Stat Dexterity { get; } // destrezza fisica
-        public Stat Constitution { get; } // costituzione corporea e resistenza
+        public Stat Strength { get; }
+        public Stat Dexterity { get; }
+        public Stat Constitution { get; } 
 
         public Stat Inteligence { get; }
         public Stat Faith { get; }
@@ -238,6 +238,7 @@ namespace game_prototype.Entity
         
         public Stat Charisma { get; }
         public Stat Luck { get; }
+        public Stat Awakening { get; }
     }
     #endregion
 }
