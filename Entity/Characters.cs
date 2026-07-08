@@ -4,7 +4,9 @@ namespace game_prototype.Entity
     {
         string Name { get; set; }
         IClasses Class { get; set; }
+        Stats Stats { get; set; }
         int Level { get; set; }
+        
     }
 }
 
