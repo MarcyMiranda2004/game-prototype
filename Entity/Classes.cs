@@ -1,6 +1,8 @@
+using System.Net.Security;
+
 namespace game_prototype.Entity
 {
-    public interface IClass
+    public interface ICharacterClass
     {
         string Name { get; }
         int Level { get; }
@@ -18,7 +20,7 @@ namespace game_prototype.Entity
         void CollectExp(int points);
     }
 
-    public abstract class ClassAbs : IClass
+    public abstract class CharacterClassAbs : ICharacterClass
     {
         public string Name { get; }
         public int Level { get; set; }
@@ -29,6 +31,14 @@ namespace game_prototype.Entity
         public string BaseEquipment { get; }
         public string Skills { get; }
         public string Description { get; }
+
+        protected CharacterClassAbs(string name, int startingLevel, int startingPointsForLevel)
+        {
+            Name = name;
+            Level = startingLevel;
+            PointForLevel = startingPointsForLevel;
+            ExperiencePoint = 0;
+        }
 
         public void UpdatePointForLevels()
         {
@@ -53,4 +63,9 @@ namespace game_prototype.Entity
             ControlExperience();
         }
     }
+    
+    public class CharacterClass : CharacterClassAbs
+    {
+        public CharacterClass(string name, int level, int pointForLevel) : base(name, level, pointForLevel) {}
+    }    
 }
