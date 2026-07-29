@@ -60,3 +60,10 @@ coverage*.info
 *~
 .DS_Store
 Thumbs.db
+
+# Cartelle di build
+bin/
+obj/
+
+# File specifici di Rider (opzionale ma consigliato se usi Rider)
+.idea/
