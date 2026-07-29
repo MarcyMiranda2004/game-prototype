@@ -56,7 +56,7 @@ namespace game_prototype.Entity
     // classe astratta per la definizione avanzata 
     public abstract class StatAbs : IStat
     {
-        public string Name { get; }
+        public string Name { get; set; }
         public int BasePoints { get; set; }
 
         private readonly Dictionary<string, ExtraModifier> _extraModifiers = new(); // dizionario con tutti gli eventuali punti extra
@@ -139,106 +139,47 @@ namespace game_prototype.Entity
         }
     }
 
-    public class Stat : IStat
+    public class Stat : StatAbs
     {
-        public string Name { get; }
-        public int BasePoints { get; set; }
-
-        private readonly Dictionary<string, ExtraModifier> _extraModifiers = new();
-        private readonly Dictionary<string, TempModifier> _tempModifiers = new();
-
-        public int ExtraPoints => _extraModifiers.Sum(m => m.Value.Points);
-        public int TempPoints => _tempModifiers.Sum(m => m.Value.Points);
-        public int TotalPoints => BasePoints + ExtraPoints + TempPoints;
-
-        // structure method
-        public Stat(string name, int basePoints = 0)
+        public Stat(string name, int basePoints = 0) // structure method
         {
             Name = name;
             BasePoints = basePoints;
         }
-
-        public void AddBasePoints(int points)
-        {
-            BasePoints += points;
-        }
-
-        public void RemoveBasePoints(int points)
-        {
-            BasePoints -= points;
-        }
-
-        public void AddExtraPoint(int points, string source)
-        {
-            if (_extraModifiers.ContainsKey(source))
-            {
-                _extraModifiers[source].Points = points;
-            } else
-            {
-                _extraModifiers.Add(source, new ExtraModifier(points, source));
-            }
-        }
-
-        public void RemoveExtraPoint(string source)
-        {
-            _extraModifiers.Remove(source);
-        }
-
-        public void AddTempPoints(int points, string source, int duration)
-        {
-            if (_tempModifiers.ContainsKey(source))
-            {
-                _tempModifiers[source].Points = points;
-                _tempModifiers[source].Duration = duration;
-            }
-            else
-            {
-                _tempModifiers.Add(source, new TempModifier(points, source, duration));
-            }
-        }
-
-        public void RemoveTempPoints(int points, string source, int duration)
-        {
-            _tempModifiers.Remove(source);
-        }
-
-        public void UpdateTurnStat()
-        {
-            List<string> expiredKeys = new();
-
-            foreach (var kvp in _tempModifiers)
-            {
-                kvp.Value.Duration--;
-
-                if (kvp.Value.IsExpired)
-                {
-                    expiredKeys.Add(kvp.Key);
-                }
-            }
-
-            foreach (var key in expiredKeys)
-            {
-                _tempModifiers.Remove(key);
-            }
-        }
+        
     }
 
-    public class Stats : StatAbs
+    public class Stats
     {
-        public Stat Health { get; }
-        public Stat Magic { get; }
+        public Stat Health { get; } = new Stat("Health");
+        public Stat Magic { get; } = new Stat("Magic");
 
-        public Stat Strength { get; }
-        public Stat Dexterity { get; }
-        public Stat Constitution { get; } 
+        public Stat Strength { get; } = new Stat("Strength");
+        public Stat Dexterity { get; } = new Stat("Dexterity");
+        public Stat Constitution { get; } = new Stat("Constitution"); 
 
-        public Stat Inteligence { get; }
-        public Stat Faith { get; }
-        public Stat Wisdom { get; }
+        public Stat Intelligence { get; } = new Stat("Intelligence");
+        public Stat Faith { get; } = new Stat("Faith");
+        public Stat Wisdom { get; } = new Stat("Wisdom");
         
-        public Stat Charisma { get; }
-        public Stat Luck { get; }
-        public Stat Awakening { get; }
+        public Stat Charisma { get; } = new Stat("Charisma");
+        public Stat Luck { get; } = new Stat("Luck");
+        public Stat Awakening { get; } = new Stat("Awakening");
+
+        public void UpdateAllTurns()
+        {
+            Health.UpdateTurnStat();
+            Magic.UpdateTurnStat();
+            Strength.UpdateTurnStat();
+            Dexterity.UpdateTurnStat();
+            Constitution.UpdateTurnStat();
+            Intelligence.UpdateTurnStat();
+            Faith.UpdateTurnStat();
+            Wisdom.UpdateTurnStat();
+            Charisma.UpdateTurnStat();
+            Luck.UpdateTurnStat();
+            Awakening.UpdateTurnStat();
+        }
     }
     #endregion
 }
