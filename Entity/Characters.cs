@@ -6,7 +6,7 @@ namespace game_prototype.Entity
         string Class { get; set; }
         Stats Stats { get; set; }
         int Level { get; set; }
-        
+        CharacterClass Class { get; set; }
     }
 }
 

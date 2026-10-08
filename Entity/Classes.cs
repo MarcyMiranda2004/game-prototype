@@ -1,17 +1,15 @@
-using System.Net.Security;
-
 namespace game_prototype.Entity
 {
     public interface ICharacterClass
     {
         string Name { get; }
-        int Level { get; }
+        int Level { get; protected set; }
         int ExperiencePoint { get; set; }
         int PointForLevel { get; set; }
-        string Bonus { get; }
-        string Competences { get; }
-        string BaseEquipment { get; }
-        string Skills { get; }
+        string[] Bonus { get; }
+        string[] Competences { get; }
+        string[] BaseEquipment { get; }
+        string[] Skills { get; }
         string Description { get; }
 
         void UpdatePointForLevels();
@@ -26,10 +24,10 @@ namespace game_prototype.Entity
         public int Level { get; set; }
         public int ExperiencePoint { get; set; }
         public int PointForLevel { get; set; }
-        public string Bonus { get; }
-        public string Competences { get; }
-        public string BaseEquipment { get; }
-        public string Skills { get; }
+        public string[] Bonus { get; }
+        public string[] Competences { get; }
+        public string[] BaseEquipment { get; }
+        public string[] Skills { get; }
         public string Description { get; }
 
         protected CharacterClassAbs(string name, int startingLevel, int startingPointsForLevel)
@@ -54,7 +52,9 @@ namespace game_prototype.Entity
 
         public void ControlExperience()
         {
-            while (ExperiencePoint >= PointForLevel) LevelUp();
+            while (ExperiencePoint >= PointForLevel) {
+                LevelUp();
+            }
         }
 
         public void CollectExp(int points)
@@ -67,5 +67,18 @@ namespace game_prototype.Entity
     public class CharacterClass : CharacterClassAbs
     {
         public CharacterClass(string name, int level, int pointForLevel) : base(name, level, pointForLevel) {}
-    }    
+    }   
+
+    public class Warrior : CharacterClass
+    {
+        public Warrior(): base("Warrior", 1, 100)
+        {
+            ExperiencePoint = 0;
+            Bonus = ["+2 Strength"];
+            Competences = ["Heavy Weapon", "Normal Weapon", "Light Weapon", "Normal Armor", "Light Armor"];
+            BaseEquipment = ["Long Sword", "Short Bow", "Knife", "Light Armor", "Backpack", "200 Gold Coin"];
+            Skills = ["Extra Attack", "Stamina Supply", "Temperance"];
+            Description = "The consummate master of arms, trained for years in the use of a wide array of weapons and in combat techniques to successfully subdue the enemy.";
+        }
+    }
 }
